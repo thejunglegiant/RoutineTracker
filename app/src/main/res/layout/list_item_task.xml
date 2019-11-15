@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="task"
+            type="com.oleksii.routinetracker.database.Task" />
+        <variable
+            name="clickListener"
+            type="com.oleksii.routinetracker.list.TaskListener" />
+        <variable
+            name="doneButtonListener"
+            type="com.oleksii.routinetracker.list.DoneButtonListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(task)}"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/task_deadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/noto_sans"
+            android:paddingStart="8dp"
+            android:paddingEnd="16dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:taskDate="@{task}"
+            tools:text="Tomorrow" />
+
+        <RadioButton
+            android:id="@+id/task_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:onClick="@{() -> doneButtonListener.onClick(task)}"
+            app:layout_constraintBottom_toBottomOf="@+id/task_details"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/task_text" />
+
+        <TextView
+            android:id="@+id/task_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans"
+            android:paddingStart="8dp"
+            android:paddingEnd="16dp"
+            android:textSize="20sp"
+            android:ems="10"
+            app:layout_constraintStart_toEndOf="@+id/task_check"
+            app:layout_constraintTop_toBottomOf="@+id/task_deadline"
+            app:taskTitle="@{task}"
+            tools:text="task" />
+
+        <TextView
+            android:id="@+id/task_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans"
+            android:paddingStart="8dp"
+            android:paddingEnd="16dp"
+            android:ems="10"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintStart_toEndOf="@+id/task_check"
+            app:layout_constraintTop_toBottomOf="@+id/task_text"
+            app:taskDetails="@{task}"
+            tools:text="details" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorGray700"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/task_check" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

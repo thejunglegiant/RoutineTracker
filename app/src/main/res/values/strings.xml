@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Routine Tracker</string>
+
+    <string name="add">add</string>
+    <string name="my_tasks">My Tasks</string>
+    <string name="save_button">Save</string>
+    <string name="new_task_dialog">New task</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_your_task">Enter your task</string>
+    <string name="add_details">Add details</string>
+    <string name="date_text">Date</string>
+    <string name="new_task">New task</string>
+</resources>
