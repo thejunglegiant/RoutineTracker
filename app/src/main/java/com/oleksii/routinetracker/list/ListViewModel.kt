@@ -1,11 +1,7 @@
 package com.oleksii.routinetracker.list
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.oleksii.routinetracker.database.Task
 import com.oleksii.routinetracker.database.TaskDao
 import kotlinx.coroutines.*
@@ -20,10 +16,11 @@ class ListViewModel(
 
     val tasks = database.getAllTasks()
 
-    fun onDoneTask(taskId: Long) {
+    fun onDoneTask(task: Task) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                database.deleteTask(taskId)
+                task.stage = 1
+                database.update(task)
             }
         }
     }

@@ -16,8 +16,8 @@ data class Task(
     var details: String,
 
     @ColumnInfo(name = "task_date")
-    var date: LocalDate?,
+    var date: LocalDate = LocalDate.MIN,
 
     @ColumnInfo(name = "task_stage")
-    var stage: Int = 0
+    var stage: Int
 )

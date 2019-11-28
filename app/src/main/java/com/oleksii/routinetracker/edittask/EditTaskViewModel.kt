@@ -1,7 +1,5 @@
 package com.oleksii.routinetracker.edittask
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.oleksii.routinetracker.database.Task
 import com.oleksii.routinetracker.database.TaskDao
@@ -21,10 +19,10 @@ class EditTaskViewModel(val database: TaskDao, val taskKey: Long) : ViewModel() 
         viewModelJob.cancel()
     }
 
-    fun updateTask(title: String, details: String, date: LocalDate?) {
+    fun updateTask(title: String, details: String, date: LocalDate, stage: Int) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                database.update(Task(taskKey, title, details, date))
+                database.update(Task(taskKey, title, details, date, stage))
                 onCleared()
             }
         }

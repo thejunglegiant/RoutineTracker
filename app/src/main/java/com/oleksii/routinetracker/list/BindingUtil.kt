@@ -1,11 +1,9 @@
 package com.oleksii.routinetracker.list
 
-import android.util.Log
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.oleksii.routinetracker.database.Task
 import com.oleksii.routinetracker.formatDate
-import java.time.LocalDate
 
 @BindingAdapter("taskTitle")
 fun TextView.setTaskTitle(item: Task?) {
@@ -24,6 +22,10 @@ fun TextView.setTaskDetails(item: Task?) {
 @BindingAdapter("taskDate")
 fun TextView.setTaskDateAsString(item: Task?) {
     item?.let {
-        text = formatDate(it.date)
+        if (it.stage == 0) {
+            text = formatDate(it.date)
+        } else {
+            text = "Completed"
+        }
     }
 }

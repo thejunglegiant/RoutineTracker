@@ -1,22 +1,13 @@
 package com.oleksii.routinetracker.createtask
 
-import android.app.Activity
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.content.Context
+import android.app.*
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.oleksii.routinetracker.R
 import com.oleksii.routinetracker.database.TaskDatabase
@@ -24,8 +15,6 @@ import com.oleksii.routinetracker.databinding.FragmentBottomSheetBinding
 import com.oleksii.routinetracker.focusAndShowKeyboard
 import com.oleksii.routinetracker.formatDate
 import java.time.LocalDate
-
-
 
 class CreateTaskFragment : BottomSheetDialogFragment() {
 
@@ -36,23 +25,16 @@ class CreateTaskFragment : BottomSheetDialogFragment() {
         val binding: FragmentBottomSheetBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_bottom_sheet, container, false)
 
+        // Create an instance of the ViewModel.
         val application = requireNotNull(this.activity).application
-
-        // Create an instance of the ViewModel Factory.
         val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
-        val viewModelFactory = CreateTaskViewModelFactory(dataSource)
-
-        // Get a reference to the ViewModel associated with this fragment.
-        val createTaskViewModel =
-            ViewModelProviders.of(
-                this, viewModelFactory).get(CreateTaskViewModel::class.java)
-
-        var date: LocalDate? = null
-
-        // To use the View Model with data binding, you have to explicitly
-        // give the binding object a reference to it.
+        val createTaskViewModel = CreateTaskViewModel(dataSource)
         binding.createTaskViewModel = createTaskViewModel
-        binding.setLifecycleOwner(this)
+
+        // For datePicker
+        var date: LocalDate = LocalDate.MIN
+
+        binding.lifecycleOwner = this
 
         // Set the focus to the edit text.
         binding.editTitle.requestFocus()

@@ -1,5 +1,7 @@
 package com.oleksii.routinetracker.list
 
+import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,24 +11,39 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.oleksii.routinetracker.database.Task
 import com.oleksii.routinetracker.databinding.ListItemTaskBinding
+import com.oleksii.routinetracker.formatDate
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.chrono.ChronoLocalDate
+import java.util.*
 
-class TaskAdapter(val clickListener: TaskListener, val doneButtonListener: DoneButtonListener) :
-    ListAdapter<Task, TaskAdapter.ViewHolder>(TaskDiffCallback())  {
+var previousDate: LocalDate = LocalDate.MIN
+var completedTasksExist: Boolean = false
+var size: Int = 0
 
-    companion object {
-        var previousDate: LocalDate? = null
-    }
+class TaskAdapter(private val clickListener: TaskListener,
+                  private val doneButtonListener: DoneButtonListener) :
+    RecyclerView.Adapter<TaskAdapter.ViewHolder>()  {
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), position, clickListener, doneButtonListener)
-    }
+    private var tasksList: List<Task> = Collections.emptyList()
+
+    override fun getItemCount() = tasksList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(val binding: ListItemTaskBinding) :
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(tasksList[position], position, clickListener, doneButtonListener)
+    }
+
+    fun submitList(data: List<Task>) {
+        tasksList = data
+        size = tasksList.size
+        notifyDataSetChanged()
+    }
+
+    class ViewHolder private constructor (private val binding: ListItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
@@ -35,19 +52,33 @@ class TaskAdapter(val clickListener: TaskListener, val doneButtonListener: DoneB
             clickListener: TaskListener,
             doneButtonListener: DoneButtonListener
         ) {
-            if (item.date == previousDate && position != 0)
-                binding.taskDeadline.visibility = View.GONE
-            if (item.details != "")
+            if (item.stage == 0) {
+                if (formatDate(item.date) == formatDate(previousDate) && position != 0)
+                    binding.taskDeadline.visibility = View.GONE
+                else
+                    binding.taskDeadline.visibility = View.VISIBLE
+
+                binding.doneButtonListener = doneButtonListener
+                previousDate = item.date
+            } else {
+                if (completedTasksExist)
+                    binding.taskDeadline.visibility = View.GONE
+                else
+                    binding.taskDeadline.visibility = View.VISIBLE
+
+                binding.taskText.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                completedTasksExist = true
+            }
+            if (item.details.isNotEmpty())
                 binding.taskDetails.visibility = View.VISIBLE
-            previousDate = item.date
-            binding.task = item
             binding.clickListener = clickListener
-            binding.doneButtonListener = doneButtonListener
+            binding.task = item
             binding.executePendingBindings()
+            if (size == position + 1) {
+                completedTasksExist = false
+            }
         }
 
-        // function needs to be in a companion object so it can be called on the ViewHolder class,
-        // not called on a ViewHolder instance.
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -59,21 +90,10 @@ class TaskAdapter(val clickListener: TaskListener, val doneButtonListener: DoneB
     }
 }
 
-class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
-    override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
-        return oldItem.title == newItem.title
-    }
-
-    override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
-        return oldItem == newItem
-    }
-
-}
-
 class TaskListener(val clickListener: (taskId: Long) -> Unit) {
     fun onClick(task: Task) = clickListener(task.taskId)
 }
 
-class DoneButtonListener(val clickListener: (taskId: Long) -> Unit) {
-    fun onClick(task: Task) = clickListener(task.taskId)
+class DoneButtonListener(val clickListener: (task: Task) -> Unit) {
+    fun onClick(task: Task) = clickListener(task)
 }

@@ -2,38 +2,36 @@ package com.oleksii.routinetracker
 
 import java.time.LocalDate
 
-fun formatDate(date: LocalDate?): String {
-    val currentDate: LocalDate = LocalDate.now()
-    val month: String
-    val day: String
-    when(date?.dayOfWeek?.value) {
-        1 -> day = "Mon"
-        2 -> day = "Tue"
-        3 -> day = "Wed"
-        4 -> day = "Thu"
-        5 -> day = "Fri"
-        6 -> day = "Sat"
-        7 -> day = "Sun"
-        else -> day = "No"
+fun formatDate(date: LocalDate): String {
+    val month = when(date.month?.value) {
+        1 -> "Jan"
+        2 -> "Feb"
+        3 -> "Mar"
+        4 -> "Apr"
+        5 -> "May"
+        6 -> "Jun"
+        7 -> "Jul"
+        8 -> "Aug"
+        9 -> "Sep"
+        10 -> "Okt"
+        11 -> "Nov"
+        else -> "Dec"
     }
-    when(date?.month?.value) {
-        1 -> month = "Jan"
-        2 -> month = "Feb"
-        3 -> month = "Mar"
-        4 -> month = "Apr"
-        5 -> month = "May"
-        6 -> month = "Jun"
-        7 -> month = "Jul"
-        8 -> month = "Aug"
-        9 -> month = "Sep"
-        10 -> month = "Okt"
-        11 -> month = "Nov"
-        12 -> month = "Dec"
-        else -> month = "due date"
+    val day = when(date.dayOfWeek.value) {
+        1 -> "Mon"
+        2 -> "Tue"
+        3 -> "Wed"
+        4 -> "Thu"
+        5 -> "Fri"
+        6 -> "Sat"
+        else -> "Sun"
     }
-    if (date != null && date.dayOfMonth < currentDate.dayOfMonth) {
-        return "Past"
+
+    return if (date != LocalDate.MIN && date.isBefore(LocalDate.now())) {
+        "Past"
+    } else if (date >= LocalDate.now()) {
+        "$day, ${date.dayOfMonth} $month"
     } else {
-        return "$day, ${if (date?.dayOfMonth==null) "" else date.dayOfMonth} $month"
+        "No, due date"
     }
 }
