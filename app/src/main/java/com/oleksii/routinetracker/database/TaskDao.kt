@@ -1,6 +1,7 @@
 package com.oleksii.routinetracker.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import java.time.LocalDate
 import java.util.*
@@ -9,7 +10,7 @@ import java.util.*
 @OnConflictStrategy
 interface TaskDao {
 
-    @Insert()
+    @Insert
     fun insert(task: Task)
 
     @Update
@@ -23,4 +24,7 @@ interface TaskDao {
 
     @Query("DELETE FROM tasks_table WHERE taskId = :key")
     fun deleteTask(key: Long)
+
+    @Query("DELETE FROM TASKS_TABLE WHERE task_stage = 1")
+    fun deleteAllCompletedTasks()
 }

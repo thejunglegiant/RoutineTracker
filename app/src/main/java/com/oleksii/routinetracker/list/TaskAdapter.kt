@@ -1,20 +1,14 @@
 package com.oleksii.routinetracker.list
 
-import android.annotation.SuppressLint
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.oleksii.routinetracker.database.Task
 import com.oleksii.routinetracker.databinding.ListItemTaskBinding
 import com.oleksii.routinetracker.formatDate
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.chrono.ChronoLocalDate
 import java.util.*
 
 var previousDate: LocalDate = LocalDate.MIN
@@ -59,6 +53,8 @@ class TaskAdapter(private val clickListener: TaskListener,
                     binding.taskDeadline.visibility = View.VISIBLE
 
                 binding.doneButtonListener = doneButtonListener
+                binding.taskText.paintFlags = binding.taskText.paintFlags and
+                        Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 previousDate = item.date
             } else {
                 if (completedTasksExist)

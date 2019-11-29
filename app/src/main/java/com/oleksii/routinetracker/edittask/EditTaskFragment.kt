@@ -40,7 +40,7 @@ class EditTaskFragment : Fragment() {
 
         var taskIsNotCompleted: Boolean = true
         var date: LocalDate = LocalDate.MIN
-        var stage: Int = 0
+        var stage = 0
 
         binding.lifecycleOwner = this
 
