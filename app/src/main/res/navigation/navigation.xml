@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_listFragment_to_editTaskFragment"
             app:destination="@id/edit_task_fragment" />
+        <action
+            android:id="@+id/action_list_fragment_to_renameListFragment"
+            app:destination="@id/renameListFragment" />
     </fragment>
     <fragment
         android:id="@+id/edit_task_fragment"
@@ -27,6 +30,21 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="taskKey"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/renameListFragment"
+        android:name="com.oleksii.routinetracker.bottommenu.RenameListFragment"
+        android:label="RenameListFragment"
+        tools:layout="@layout/fragment_rename_list">
+        <action
+            android:id="@+id/action_renameListFragment_to_list_fragment"
+            app:destination="@id/list_fragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/list_fragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="id"
             app:argType="long" />
     </fragment>
 </navigation>

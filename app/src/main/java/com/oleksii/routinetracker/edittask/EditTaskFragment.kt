@@ -9,9 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.core.text.set
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.ListFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -41,6 +40,7 @@ class EditTaskFragment : Fragment() {
         var taskIsNotCompleted: Boolean = true
         var date: LocalDate = LocalDate.MIN
         var stage = 0
+        var currentListId = com.oleksii.routinetracker.list.ListFragment.currentListId
 
         binding.lifecycleOwner = this
 
@@ -73,7 +73,7 @@ class EditTaskFragment : Fragment() {
             if (binding.addDetails.text.isEmpty())
                 details = ""
 
-            editTaskViewModel.updateTask(title, details, date, stage)
+            editTaskViewModel.updateTask(currentListId,title, details, date, stage)
             this.findNavController().navigate(R.id.action_editTaskFragment_to_listFragment)
             hideKeyboard(activity)
         }

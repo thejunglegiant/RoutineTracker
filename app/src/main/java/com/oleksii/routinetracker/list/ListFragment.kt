@@ -20,19 +20,16 @@ lateinit var binding: FragmentListBinding
 
 class ListFragment : Fragment() {
 
+    private lateinit var listViewModel: ListViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_list, container, false)
-
         val application = requireNotNull(this.activity).application
-
         val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
-
-        val listViewModel = ListViewModel(dataSource, application)
-
+        listViewModel = ListViewModel(dataSource, application)
         val adapter = TaskAdapter(
             TaskListener { taskId ->
                 this.findNavController().navigate(
@@ -41,11 +38,10 @@ class ListFragment : Fragment() {
             },
             DoneButtonListener { task ->
                 listViewModel.onDoneTask(task)
-                showSnackBar("You did it!")
+                showSnackBar(getString(R.string.you_did_it))
             })
 
         binding.listViewModel = listViewModel
-
         binding.tasksList.adapter = adapter
 
         binding.addButton.setOnClickListener {
@@ -58,27 +54,46 @@ class ListFragment : Fragment() {
             bottomMenuFragment.show(fragmentManager!!, bottomMenuFragment.tag)
         }
 
-        listViewModel.tasks.observe(viewLifecycleOwner, Observer {
-            it.let {
-                amountOfCompletedTasks = 0
-                adapter.submitList(it)
-                it.forEach {
-                    if (it.stage == 1)
-                        amountOfCompletedTasks++
-                }
+        listViewModel.tasks.observe(viewLifecycleOwner, Observer { data ->
+            amountOfTasks = 0
+            amountOfCompletedTasks = 0
+            data.filter { it.listId == currentListId }
+            data.forEach { task ->
+                amountOfTasks++
+                if (task.stage == 1)
+                    amountOfCompletedTasks++
+            }
+            adapter.submitList(data)
+
+        })
+
+        listViewModel.list.observe(viewLifecycleOwner, Observer { list ->
+            if (list == null) {
+                listViewModel.insertList()
+            } else {
+                currentListId = list.listId
+                binding.listTitle.text = list.title
             }
         })
 
         return binding.root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        listViewModel.setLastOpenedList(currentListId)
+    }
+
     companion object {
         var amountOfCompletedTasks: Int = 0
+        var amountOfTasks: Int = 0
+        var currentListId: Long = 0
         fun showSnackBar(string: String) {
             Snackbar.make(
                 binding.tasksList,
                 string,
-                Snackbar.LENGTH_SHORT).show()
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 }

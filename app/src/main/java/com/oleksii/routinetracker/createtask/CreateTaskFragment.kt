@@ -17,12 +17,14 @@ import com.oleksii.routinetracker.focusAndShowKeyboard
 import com.oleksii.routinetracker.formatDate
 import java.time.LocalDate
 import com.oleksii.routinetracker.list.ListFragment
+import com.oleksii.routinetracker.list.ListFragment.Companion.currentListId
 
 class CreateTaskFragment : BottomSheetDialogFragment() {
 
     lateinit var binding: FragmentCreateTaskBinding
-    lateinit var createTaskViewModel: CreateTaskViewModel
+    private lateinit var createTaskViewModel: CreateTaskViewModel
     var date: LocalDate = LocalDate.MIN
+    var saveButtonWasNotPressed = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,7 +38,6 @@ class CreateTaskFragment : BottomSheetDialogFragment() {
         val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
         createTaskViewModel = CreateTaskViewModel(dataSource)
         binding.createTaskViewModel = createTaskViewModel
-
         binding.lifecycleOwner = this
 
         // Set the focus to the edit text.
@@ -51,13 +52,14 @@ class CreateTaskFragment : BottomSheetDialogFragment() {
             val datePickerDialog = DatePickerDialog(it.context, R.style.DatePickerTheme)
             datePickerDialog.setOnDateSetListener { _, year, month, dayOfMonth ->
                 date = LocalDate.of(year, month + 1, dayOfMonth)
-                binding.dateShow.setText(formatDate(date))
+                binding.dateShow.text = formatDate(date)
                 binding.dateShow.visibility = View.VISIBLE
             }
             datePickerDialog.show()
         }
 
         binding.saveButton.setOnClickListener {
+            saveButtonWasNotPressed = false
             savingTask()
         }
 
@@ -66,17 +68,20 @@ class CreateTaskFragment : BottomSheetDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        savingTask()
+        if (saveButtonWasNotPressed)
+            savingTask()
     }
 
-    fun savingTask() {
+    private fun savingTask() {
         if (binding.editTitle.text.toString().trim().isNotEmpty()) {
             val title = binding.editTitle.text.toString()
-            val details = binding.addDetails.text.toString()
-            createTaskViewModel.createTask(title, details, date)
+            var details = binding.addDetails.text.toString()
+            if (binding.addDetails.text.isEmpty())
+                details = ""
+            createTaskViewModel.createTask(currentListId, title, details, date)
             this.dismiss()
         } else {
-            ListFragment.showSnackBar("Enter the task!")
+            this.dismiss()
         }
     }
 }

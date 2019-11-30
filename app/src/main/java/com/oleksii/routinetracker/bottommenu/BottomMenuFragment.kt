@@ -3,17 +3,19 @@ package com.oleksii.routinetracker.bottommenu
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import com.oleksii.routinetracker.R
 import com.oleksii.routinetracker.database.TaskDatabase
 import com.oleksii.routinetracker.databinding.FragmentBottomMenuBinding
 import com.oleksii.routinetracker.list.ListFragment
-
+import com.oleksii.routinetracker.list.ListFragmentDirections
 
 class BottomMenuFragment : BottomSheetDialogFragment() {
 
@@ -28,35 +30,62 @@ class BottomMenuFragment : BottomSheetDialogFragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
         val bottomMenuViewModel = BottomMenuViewModel(dataSource)
-        binding.buttomMenuViewModel= bottomMenuViewModel
+        val amountOfCompletedTasks = ListFragment.amountOfCompletedTasks
+        val amountOfTasks = ListFragment.amountOfTasks
+        val currentListId = ListFragment.currentListId
+        binding.buttomMenuViewModel = bottomMenuViewModel
 
-        binding.lifecycleOwner = this
+        val stageDialog: AlertDialog.Builder = AlertDialog.Builder(context)
+        val listDialog: AlertDialog.Builder = AlertDialog.Builder(context)
 
-        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-
-        val dialogClickListener =
-            DialogInterface.OnClickListener { dialog, which ->
+        val stageClickListener =
+            DialogInterface.OnClickListener { _, which ->
                 when (which) {
                     DialogInterface.BUTTON_POSITIVE -> {
-                        if (ListFragment.amountOfCompletedTasks != 0) {
+                        if (amountOfCompletedTasks != 0) {
                             bottomMenuViewModel.deleteAllCompletedTasks()
                             ListFragment.showSnackBar("Completed tasks were deleted")
                         }
                     }
-                    DialogInterface.BUTTON_NEGATIVE -> {
-                        // nothing for now
+                }
+            }
+
+        val listClickListener =
+            DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        bottomMenuViewModel.deleteCurrentList(currentListId)
+                        ListFragment.showSnackBar("List were successfully deleted")
                     }
                 }
             }
 
-        builder.setTitle("Delete all completed tasks?")
-            .setMessage("There are ${ListFragment.amountOfCompletedTasks} " +
-                "completed tasks that will be permanently removed.")
-            .setPositiveButton("Delete", dialogClickListener)
-            .setNegativeButton("Cancel", dialogClickListener)
+        stageDialog.setTitle("Delete all completed tasks?")
+            .setMessage("There are $amountOfCompletedTasks " +
+                "completed ${if (amountOfCompletedTasks> 1) "tasks" else "task"} " +
+                    "that will be permanently removed.")
+            .setPositiveButton("Delete", stageClickListener)
+            .setNegativeButton("Cancel", stageClickListener)
+
+        listDialog.setTitle("Delete this list?")
+            .setMessage("Deleting this list will also delete $amountOfTasks " +
+                    "${if (amountOfTasks > 1) "tasks" else "task"}.")
+            .setPositiveButton("Delete", listClickListener)
+            .setNegativeButton("Cancel", listClickListener)
+
+        binding.renameList.setOnClickListener {
+            findNavController().navigate(
+                ListFragmentDirections.actionListFragmentToRenameListFragment(currentListId))
+            this.dismiss()
+        }
+
+        binding.deleteList.setOnClickListener {
+            listDialog.show()
+            this.dismiss()
+        }
 
         binding.deleteCompleted.setOnClickListener {
-            builder.show()
+            stageDialog.show()
             this.dismiss()
         }
 

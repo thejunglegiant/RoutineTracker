@@ -9,6 +9,8 @@ data class Task(
     @PrimaryKey(autoGenerate = true)
     var taskId: Long,
 
+    var listId: Long = 0,
+
     @ColumnInfo(name = "task_title")
     var title: String,
 
@@ -19,5 +21,5 @@ data class Task(
     var date: LocalDate = LocalDate.MIN,
 
     @ColumnInfo(name = "task_stage")
-    var stage: Int
+    var stage: Int = 0
 )

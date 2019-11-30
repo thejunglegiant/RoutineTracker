@@ -1,20 +1,24 @@
 package com.oleksii.routinetracker.database
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import java.time.LocalDate
-import java.util.*
 
 @Dao
 @OnConflictStrategy
 interface TaskDao {
 
     @Insert
-    fun insert(task: Task)
+    fun insertTask(task: Task)
+
+    @Insert
+    fun insertList(list: SetOfTask)
 
     @Update
-    fun update(task: Task)
+    fun updateTask(task: Task)
+
+    @Update
+    fun updateList(list: SetOfTask)
 
     @Query("SELECT * FROM tasks_table WHERE taskId = :key")
     fun getTaskWithId(key: Long): LiveData<Task>
@@ -25,6 +29,21 @@ interface TaskDao {
     @Query("DELETE FROM tasks_table WHERE taskId = :key")
     fun deleteTask(key: Long)
 
-    @Query("DELETE FROM TASKS_TABLE WHERE task_stage = 1")
+    @Query("DELETE FROM tasks_table WHERE task_stage = 1")
     fun deleteAllCompletedTasks()
+
+    @Query("DELETE FROM lists_table WHERE listId = :listId")
+    fun deleteCurrentListById(listId: Long)
+
+    @Query("DELETE FROM tasks_table WHERE listId = :listId")
+    fun deleteAllTasksOfCurrentList(listId: Long)
+
+    @Query("SELECT * FROM lists_table WHERE last_opened")
+    fun getListLastOpened(): LiveData<SetOfTask>
+
+    @Query("SELECT * FROM lists_table WHERE listId = :listId")
+    fun getListById(listId: Long): SetOfTask
+
+    @Query("SELECT COUNT(*) FROM lists_table")
+    fun getAmountOfLists(): LiveData<Int>
 }
