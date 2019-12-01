@@ -21,6 +21,7 @@
             android:id="@+id/list_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/noto_sans"
             android:textSize="19sp"
             android:textColor="@color/colorBlack"

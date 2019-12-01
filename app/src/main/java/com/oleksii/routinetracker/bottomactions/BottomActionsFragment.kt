@@ -1,5 +1,6 @@
 package com.oleksii.routinetracker.bottomactions
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.oleksii.routinetracker.list.ListFragmentDirections
 
 class BottomActionsFragment : BottomSheetDialogFragment() {
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -73,7 +75,11 @@ class BottomActionsFragment : BottomSheetDialogFragment() {
             .setNegativeButton("Cancel", listClickListener)
 
         bottomActionsViewModel.deleteListButtonEnable.observe(this, Observer {
-            binding.deleteList.isEnabled = it
+            if (it != true) {
+                binding.deleteList.isEnabled = it
+                binding.deleteList.setTextColor(R.color.colorGray600)
+                binding.additionalInfo.visibility = View.VISIBLE
+            }
         })
 
         binding.renameList.setOnClickListener {
@@ -83,7 +89,12 @@ class BottomActionsFragment : BottomSheetDialogFragment() {
         }
 
         binding.deleteList.setOnClickListener {
-            listDialog.show()
+            if (amountOfTasks < 1) {
+                bottomActionsViewModel.deleteCurrentList(currentListId)
+                ListFragment.showSnackBar("List were successfully deleted")
+            } else {
+                listDialog.show()
+            }
             this.dismiss()
         }
 
