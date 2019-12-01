@@ -7,9 +7,9 @@ import java.time.LocalDate
 @TypeConverters(Converters::class)
 data class Task(
     @PrimaryKey(autoGenerate = true)
-    var taskId: Long,
+    var taskId: Long = 1,
 
-    var listId: Long = 0,
+    var listId: Long,
 
     @ColumnInfo(name = "task_title")
     var title: String,

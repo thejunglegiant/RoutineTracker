@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "lists_table")
 data class SetOfTask(
-    @PrimaryKey
-    var listId: Long = 0,
+    @PrimaryKey(autoGenerate = true)
+    var listId: Long = 1,
 
     @ColumnInfo(name = "list_name")
     var title: String = "My Tasks",

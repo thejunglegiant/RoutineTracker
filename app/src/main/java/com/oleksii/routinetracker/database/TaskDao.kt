@@ -23,8 +23,10 @@ interface TaskDao {
     @Query("SELECT * FROM tasks_table WHERE taskId = :key")
     fun getTaskWithId(key: Long): LiveData<Task>
 
-    @Query("SELECT * FROM tasks_table ORDER BY task_stage, CASE WHEN task_date IS :date THEN 1 ELSE 0 END, task_date")
-    fun getAllTasks(date: LocalDate = LocalDate.MIN): LiveData<List<Task>>
+    @Query("SELECT tasks_table.* FROM lists_table LEFT JOIN tasks_table WHERE last_opened " +
+            "AND lists_table.listId = tasks_table.listId " +
+            "ORDER BY task_stage, CASE WHEN task_date IS :date THEN 1 ELSE 0 END, task_date")
+    fun getTasksByList(date: LocalDate = LocalDate.MIN): LiveData<List<Task>>
 
     @Query("DELETE FROM tasks_table WHERE taskId = :key")
     fun deleteTask(key: Long)
@@ -39,11 +41,20 @@ interface TaskDao {
     fun deleteAllTasksOfCurrentList(listId: Long)
 
     @Query("SELECT * FROM lists_table WHERE last_opened")
-    fun getListLastOpened(): LiveData<SetOfTask>
+    fun getLastOpenedList(): LiveData<SetOfTask>
+
+    @Query("SELECT listId FROM lists_table WHERE last_opened")
+    fun getLastOpenedListId(): Long
 
     @Query("SELECT * FROM lists_table WHERE listId = :listId")
     fun getListById(listId: Long): SetOfTask
 
     @Query("SELECT COUNT(*) FROM lists_table")
     fun getAmountOfLists(): LiveData<Int>
+
+    @Query("SELECT * FROM lists_table ORDER BY listId")
+    fun getAllLists(): LiveData<List<SetOfTask>>
+
+    @Query("SELECT * FROM lists_table WHERE listId = 1")
+    fun getDefaultList(): SetOfTask
 }

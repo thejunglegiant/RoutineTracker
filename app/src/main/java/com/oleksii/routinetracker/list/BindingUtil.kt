@@ -2,6 +2,7 @@ package com.oleksii.routinetracker.list
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.oleksii.routinetracker.database.SetOfTask
 import com.oleksii.routinetracker.database.Task
 import com.oleksii.routinetracker.formatDate
 
@@ -28,4 +29,9 @@ fun TextView.setTaskDateAsString(item: Task?) {
             text = "Completed"
         }
     }
+}
+
+@BindingAdapter("listTitle")
+fun TextView.setListTitle(item: SetOfTask?) {
+    text = item?.title
 }

@@ -3,57 +3,107 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="buttomMenuViewModel"
-            type="com.oleksii.routinetracker.bottommenu.BottomMenuViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/rename_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/noto_sans"
-            android:text="@string/rename_list"
-            android:textColor="@color/colorBlack"
-            android:textSize="24sp"
+        <Button
+            android:id="@+id/drag_ic"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="30dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/custom_drag_n_drop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/delete_list"
-            android:layout_width="0dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/titles_list"
+            android:layout_width="347dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:fontFamily="@font/noto_sans"
-            android:text="@string/delete_list"
-            android:textColor="@color/colorBlack"
-            android:textSize="24sp"
-            android:enabled="@{buttomMenuViewModel.deleteListButtonEnable}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rename_list" />
+            app:layout_constraintTop_toBottomOf="@+id/drag_ic" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorGray700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titles_list" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/add_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line">
+
+            <ImageView
+                android:id="@+id/plus_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_add_30dp" />
+
+            <TextView
+                android:id="@+id/add_list_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="@string/create_new_list"
+                android:textColor="@color/colorBlack"
+                android:textSize="19sp"
+                app:layout_constraintBottom_toBottomOf="@+id/plus_button"
+                app:layout_constraintStart_toEndOf="@+id/plus_button"
+                app:layout_constraintTop_toTopOf="@+id/plus_button" />
+
+            <View
+                android:id="@+id/second_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorGray700"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/plus_button" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/delete_completed"
+            android:id="@+id/dark_theme_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/noto_sans"
-            android:text="@string/delete_all_completed_tasks"
+            android:text="@string/dark_theme"
             android:textColor="@color/colorBlack"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="19sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/delete_list" />
+            app:layout_constraintTop_toBottomOf="@+id/add_list" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="@+id/dark_theme_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dark_theme_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

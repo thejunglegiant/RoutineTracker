@@ -1,7 +1,6 @@
 package com.oleksii.routinetracker.list
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.oleksii.routinetracker.database.SetOfTask
 import com.oleksii.routinetracker.database.Task
@@ -16,8 +15,8 @@ class ListViewModel(
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val tasks = database.getAllTasks()
-    var list = database.getListLastOpened()
+    var lists = database.getAllLists()
+    val tasks = database.getTasksByList()
 
     fun onDoneTask(task: Task) {
         uiScope.launch {
@@ -32,16 +31,6 @@ class ListViewModel(
         uiScope.launch {
             withContext(Dispatchers.IO) {
                 database.insertList(SetOfTask())
-            }
-        }
-    }
-
-    fun setLastOpenedList(currentListId: Long) {
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
-                val list = database.getListById(currentListId)
-                list.opened = true
-                database.insertList(list)
             }
         }
     }

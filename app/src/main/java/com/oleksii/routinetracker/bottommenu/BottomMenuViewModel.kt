@@ -1,8 +1,10 @@
-package com.oleksii.routinetracker.bottommenu
+package com.oleksii.routinetracker.bottomactions
 
-import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.oleksii.routinetracker.database.SetOfTask
 import com.oleksii.routinetracker.database.TaskDao
 import kotlinx.coroutines.*
 
@@ -11,42 +13,39 @@ class BottomMenuViewModel(val database: TaskDao) : ViewModel() {
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    var list = database.getAmountOfLists()
+    var lists = database.getAllLists()
 
-    val deleteListButtonEnable = Transformations.map(list) {
-        it > 1
-    }
+    private val _newListId = MutableLiveData<Long>()
+    val newListId
+            get() = _newListId
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
 
-    fun deleteAllCompletedTasks() {
+    fun setCurrentList(currentListId: Long, chosenListId: Long) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                database.deleteAllCompletedTasks()
-                onCleared()
+                val currentList = database.getListById(currentListId)
+                currentList.opened = false
+                database.updateList(currentList)
+                val chosenList = database.getListById(chosenListId)
+                chosenList.opened = true
+                database.updateList(chosenList)
             }
         }
     }
 
-    fun deleteCurrentList(currentListId: Long) {
+    fun createList(currentListId: Long, title: String) {
         uiScope.launch {
+            val newList = SetOfTask(0, title, true)
+            _newListId.value = newList.listId
             withContext(Dispatchers.IO) {
-                database.deleteAllTasksOfCurrentList(currentListId)
-                database.deleteCurrentListById(currentListId)
-            }
-        }
-    }
-
-    fun renameCurrentList(currentListId: Long, title: String) {
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
-                val list = database.getListById(currentListId)
-                if (title != "")
-                    list.title = title
-                database.updateList(list)
+                val currentList = database.getListById(currentListId)
+                currentList.opened = false
+                database.updateList(currentList)
+                database.insertList(newList)
             }
         }
     }

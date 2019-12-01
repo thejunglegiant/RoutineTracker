@@ -13,4 +13,7 @@
     <string name="delete_all_completed_tasks">Delete all completed tasks</string>
     <string name="you_did_it">You did it!</string>
     <string name="enter_list_title">Enter list title</string>
+    <string name="create_new_list">Create new list</string>
+    <string name="done">Done</string>
+    <string name="dark_theme">Dark theme</string>
 </resources>

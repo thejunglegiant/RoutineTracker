@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="list"
+            type="com.oleksii.routinetracker.database.SetOfTask" />
+        <variable
             name="listViewModel"
             type="com.oleksii.routinetracker.list.ListViewModel" />
     </data>
@@ -19,14 +22,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="64dp"
+            android:fontFamily="@font/noto_sans"
             android:paddingTop="@dimen/small_padding"
-            android:text="@string/my_tasks"
             android:textColor="@color/colorBlack"
             android:textSize="48sp"
-            android:fontFamily="@font/noto_sans"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:listTitle="@{list}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/tasks_list"
@@ -50,11 +53,11 @@
             android:id="@+id/add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/custom_button"
+            android:fontFamily="@font/noto_sans"
             android:text="@string/add"
             android:textColor="@color/colorBlue500"
-            android:fontFamily="@font/noto_sans"
             android:textSize="18sp"
-            android:background="@drawable/custom_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +72,17 @@
             android:src="@drawable/three_dots_30dp"
             app:layout_constraintBottom_toBottomOf="@+id/add_button"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/add_button" />
+
+        <ImageButton
+            android:id="@+id/menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_menu_30dp"
+            app:layout_constraintBottom_toBottomOf="@+id/add_button"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/add_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

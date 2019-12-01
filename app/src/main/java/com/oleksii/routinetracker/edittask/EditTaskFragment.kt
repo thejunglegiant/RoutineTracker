@@ -47,7 +47,7 @@ class EditTaskFragment : Fragment() {
         binding.editDate.setOnClickListener {
             if (taskIsNotCompleted) {
                 val datePickerDialog = DatePickerDialog(it.context, R.style.DatePickerTheme)
-                datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
+                datePickerDialog.setOnDateSetListener { _, year, month, dayOfMonth ->
                     date = LocalDate.of(year, month + 1, dayOfMonth)
                     binding.editDate.setText(formatDate(date))
                 }

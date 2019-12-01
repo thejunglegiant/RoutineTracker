@@ -1,6 +1,7 @@
 package com.oleksii.routinetracker.list
 
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,8 +32,13 @@ class TaskAdapter(private val clickListener: TaskListener,
         holder.bind(tasksList[position], position, clickListener, doneButtonListener)
     }
 
-    fun submitList(data: List<Task>) {
-        tasksList = data
+    fun submitList(data: List<Task>?) {
+        if (data == null) {
+            tasksList = Collections.emptyList()
+        } else {
+            tasksList = data
+        }
+
         size = tasksList.size
         notifyDataSetChanged()
     }
