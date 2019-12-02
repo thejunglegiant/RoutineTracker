@@ -13,5 +13,8 @@ data class SetOfTask(
     var title: String = "My Tasks",
 
     @ColumnInfo(name = "last_opened")
-    var opened: Boolean = true
+    var opened: Boolean = true,
+
+    @ColumnInfo(name = "dark_theme")
+    var darkTheme: Boolean = false
 )

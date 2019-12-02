@@ -1,12 +1,11 @@
 package com.oleksii.routinetracker.bottomactions
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,7 +13,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.oleksii.routinetracker.R
 import com.oleksii.routinetracker.bottommenu.ClickListener
 import com.oleksii.routinetracker.bottommenu.ListAdapter
-import com.oleksii.routinetracker.database.SetOfTask
 import com.oleksii.routinetracker.database.TaskDatabase
 import com.oleksii.routinetracker.databinding.FragmentBottomMenuBinding
 import com.oleksii.routinetracker.list.ListFragment
@@ -35,19 +33,30 @@ class BottomMenuFragment : BottomSheetDialogFragment() {
         val bottomMenuViewModel = BottomMenuViewModel(dataSource)
         val currentListId = ListFragment.currentListId
 
-        val adapter: ListAdapter = ListAdapter(
+        val adapter = ListAdapter(
             ClickListener { listId ->
                 ListFragment.currentListId = listId
                 bottomMenuViewModel.setCurrentList(currentListId, listId)
                 this.dismiss()
             }
         )
+
         binding.titlesList.adapter = adapter
 
         binding.addList.setOnClickListener {
             findNavController().navigate(
-                ListFragmentDirections.actionListFragmentToAddListFragment(currentListId))
+                ListFragmentDirections.actionListFragmentToAddListFragment(currentListId)
+            )
             this.dismiss()
+        }
+
+        binding.switchTheme.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
         }
 
         bottomMenuViewModel.lists.observe(this, Observer {

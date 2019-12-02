@@ -6,7 +6,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
 
         <ImageButton
             android:id="@+id/cancel_action"
@@ -24,10 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:fontFamily="@font/noto_sans"
             android:text="@string/rename_list"
-            android:textColor="@color/colorBlack"
-            android:textSize="19sp"
+            style="@style/regular_text"
             app:layout_constraintBottom_toBottomOf="@+id/cancel_action"
             app:layout_constraintStart_toEndOf="@+id/cancel_action"
             app:layout_constraintTop_toTopOf="@+id/cancel_action" />
@@ -40,10 +39,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/custom_transparent_button"
-            android:fontFamily="@font/noto_sans"
             android:text="@string/done"
             android:textAllCaps="false"
-            android:textColor="@color/colorBlue500"
+            android:textColor="@color/colorAccent"
             android:textSize="19sp"
             app:layout_constraintBottom_toBottomOf="@+id/rename_list"
             app:layout_constraintEnd_toEndOf="parent"
@@ -69,11 +67,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:background="@android:color/transparent"
-            android:fontFamily="@font/noto_sans"
             android:hint="@string/enter_list_title"
             android:inputType="text"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
+            style="@style/edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line"
@@ -88,16 +84,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_title" />
-
-        <LinearLayout
-            android:id="@+id/linearlayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/colorGray300"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/second_line"
-            android:orientation="vertical" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
