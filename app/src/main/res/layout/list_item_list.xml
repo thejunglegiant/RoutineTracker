@@ -34,6 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:onClick="@{() -> clickListener.onClick(setOfTask)}"
                 app:listTitle="@{setOfTask}"
                 tools:text="List title" />

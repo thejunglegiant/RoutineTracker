@@ -1,15 +1,13 @@
 package com.oleksii.routinetracker.bottomactions
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.oleksii.routinetracker.R
@@ -20,7 +18,6 @@ import com.oleksii.routinetracker.list.ListFragmentDirections
 
 class BottomActionsFragment : BottomSheetDialogFragment() {
 
-    @SuppressLint("ResourceAsColor")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -76,7 +73,9 @@ class BottomActionsFragment : BottomSheetDialogFragment() {
 
         if (currentListId == 1.toLong()) {
             binding.deleteList.isEnabled = false
-            binding.deleteList.setTextColor(R.color.textHintColor)
+            binding.deleteList.setTextColor(
+                ContextCompat.getColor(application.applicationContext, (R.color.textHintColor))
+            )
             binding.additionalInfo.visibility = View.VISIBLE
         }
 

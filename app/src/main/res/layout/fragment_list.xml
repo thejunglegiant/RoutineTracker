@@ -14,7 +14,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/list_layout"
@@ -57,15 +58,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="24sp"
+                    android:text="@string/a_fresh_start"
                     android:textColor="@color/colorAccent"
-                    android:text="@string/a_fresh_start" />
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/anything_to_add" />
+                    android:text="@string/anything_to_add"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
