@@ -17,4 +17,6 @@
     <string name="done">Done</string>
     <string name="dark_theme">Dark theme</string>
     <string name="default_list_cant_be_deleted">Default list can\'t be deleted</string>
+    <string name="a_fresh_start">A fresh start</string>
+    <string name="anything_to_add">Anything to add?</string>
 </resources>

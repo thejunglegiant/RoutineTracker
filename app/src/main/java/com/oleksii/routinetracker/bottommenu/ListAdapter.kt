@@ -3,11 +3,12 @@ package com.oleksii.routinetracker.bottommenu
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.oleksii.routinetracker.R
 import com.oleksii.routinetracker.database.SetOfTask
 import com.oleksii.routinetracker.databinding.ListItemListBinding
 import java.util.*
 
-class ListAdapter(private val clickListener: ClickListener) :
+class ListAdapter(private val clickListener: ClickListener, val currentListId: Long, val color: Int) :
     RecyclerView.Adapter<ListAdapter.ViewHolder>()  {
 
     private var setOfTaskList: List<SetOfTask> = Collections.emptyList()
@@ -19,7 +20,7 @@ class ListAdapter(private val clickListener: ClickListener) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(setOfTaskList[position], clickListener)
+        holder.bind(setOfTaskList[position], clickListener, currentListId, color)
     }
 
     fun submitList(data: List<SetOfTask>) {
@@ -32,8 +33,14 @@ class ListAdapter(private val clickListener: ClickListener) :
 
         fun bind(
             item: SetOfTask,
-            clickListener: ClickListener
+            clickListener: ClickListener,
+            currentListId: Long,
+            color: Int
         ) {
+            if (currentListId == item.listId) {
+                binding.background.setBackgroundResource(R.drawable.current_list_background)
+                binding.listTitle.setTextColor(color)
+            }
             binding.setOfTask = item
             binding.clickListener = clickListener
             binding.executePendingBindings()

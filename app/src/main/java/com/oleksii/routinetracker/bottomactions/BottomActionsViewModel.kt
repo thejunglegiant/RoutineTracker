@@ -11,12 +11,6 @@ class BottomActionsViewModel(val database: TaskDao) : ViewModel() {
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private var listsAmount = database.getAmountOfLists()
-
-    val deleteListButtonEnable = Transformations.map(listsAmount) {
-        it > 1
-    }
-
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()

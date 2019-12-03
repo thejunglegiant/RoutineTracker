@@ -32,6 +32,6 @@ fun formatDate(date: LocalDate): String {
     } else if (date >= LocalDate.now()) {
         "$day, ${date.dayOfMonth} $month"
     } else {
-        "No, due date"
+        "No due date"
     }
 }

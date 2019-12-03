@@ -42,7 +42,8 @@ class ListFragment : Fragment() {
             DoneButtonListener { task ->
                 listViewModel.onDoneTask(task)
                 showSnackBar(getString(R.string.you_did_it))
-            })
+            }
+        )
         binding.tasksList.adapter = adapter
 
         listViewModel = ListViewModel(dataSource, application)
@@ -79,6 +80,11 @@ class ListFragment : Fragment() {
 
         listViewModel.tasks.observe(this, Observer {
             submitAll(it, adapter)
+            if (it.isNullOrEmpty()) {
+                binding.freshStart.visibility = View.VISIBLE
+            } else {
+                binding.freshStart.visibility = View.GONE
+            }
         })
 
         return binding.root

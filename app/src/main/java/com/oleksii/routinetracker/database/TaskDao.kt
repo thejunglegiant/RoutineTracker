@@ -49,9 +49,6 @@ interface TaskDao {
     @Query("SELECT * FROM lists_table WHERE listId = :listId")
     fun getListById(listId: Long): SetOfTask
 
-    @Query("SELECT COUNT(*) FROM lists_table")
-    fun getAmountOfLists(): LiveData<Int>
-
     @Query("SELECT * FROM lists_table ORDER BY listId")
     fun getAllLists(): LiveData<List<SetOfTask>>
 

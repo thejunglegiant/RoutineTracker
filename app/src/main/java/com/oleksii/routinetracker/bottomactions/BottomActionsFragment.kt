@@ -74,13 +74,11 @@ class BottomActionsFragment : BottomSheetDialogFragment() {
             .setPositiveButton("Delete", listClickListener)
             .setNegativeButton("Cancel", listClickListener)
 
-        bottomActionsViewModel.deleteListButtonEnable.observe(this, Observer {
-            if (it != true) {
-                binding.deleteList.isEnabled = it
-                binding.deleteList.setTextColor(R.color.colorGray600)
-                binding.additionalInfo.visibility = View.VISIBLE
-            }
-        })
+        if (currentListId == 1.toLong()) {
+            //binding.deleteList.isEnabled = false
+            binding.deleteList.setTextColor(R.color.textHintColor)
+            binding.additionalInfo.visibility = View.VISIBLE
+        }
 
         binding.renameList.setOnClickListener {
             findNavController().navigate(
