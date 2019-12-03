@@ -75,7 +75,7 @@ class BottomActionsFragment : BottomSheetDialogFragment() {
             .setNegativeButton("Cancel", listClickListener)
 
         if (currentListId == 1.toLong()) {
-            //binding.deleteList.isEnabled = false
+            binding.deleteList.isEnabled = false
             binding.deleteList.setTextColor(R.color.textHintColor)
             binding.additionalInfo.visibility = View.VISIBLE
         }
