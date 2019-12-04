@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#F5F5F5</color>
+    <color name="colorAccent">#673AB7</color>
+    <color name="colorAccentLight">#D1C4E9</color>
+    <color name="colorBackground">#ffffff</color>
+    <color name="textColor">#000000</color>
+    <color name="textHintColor">#616161</color>
+    <color name="datePickerBackground">#FFFFFF</color>
+
+    <color name="colorGray700">#616161</color>
+    <color name="colorGray300">#E0E0E0</color>
     <color name="colorBlue500">#03A9F4</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorGray700">#616161</color>
+    <color name="colorGray600">#757575</color>
 </resources>

@@ -11,24 +11,26 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/view"
+        android:background="@color/colorPrimary">
 
         <EditText
             android:id="@+id/edit_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
-            android:ems="17"
+            android:ems="10"
             android:hint="@string/new_task"
             android:inputType="text"
-            android:fontFamily="@font/noto_sans"
-            android:textSize="20sp"
+            style="@style/edit_text"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:autofillHints="" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/details_add"
@@ -37,7 +39,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
-            android:tint="@color/colorBlue500"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_details"
@@ -48,7 +49,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:tint="@color/colorBlue500"
             app:layout_constraintBottom_toBottomOf="@+id/details_add"
             app:layout_constraintStart_toEndOf="@+id/details_add"
             app:layout_constraintTop_toTopOf="@+id/details_add"
@@ -58,12 +58,11 @@
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:background="?android:attr/selectableItemBackground"
-            android:fontFamily="@font/noto_sans"
             android:text="@string/save_button"
-            android:textColor="@color/colorBlue500"
-            android:textSize="16sp"
+            android:textAllCaps="false"
+            style="@style/button_text"
             app:layout_constraintBottom_toBottomOf="@+id/details_add"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/details_add" />
@@ -75,10 +74,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
+            android:inputType="textMultiLine"
             android:ems="10"
             android:hint="@string/add_details"
-            android:inputType="text"
             android:textSize="17sp"
+            android:textColor="@color/textHintColor"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_title"
@@ -90,6 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:visibility="gone"
+            android:textColor="@color/textHintColor"
             app:layout_constraintBottom_toBottomOf="@+id/date_picker"
             app:layout_constraintStart_toEndOf="@+id/date_picker"
             app:layout_constraintTop_toTopOf="@+id/date_picker"

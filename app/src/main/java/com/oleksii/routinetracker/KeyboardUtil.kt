@@ -47,20 +47,6 @@ fun focusAndShowKeyboard(activity: Activity?, view: View) {
     }
 }
 
-/**
- * Clear focus from the current view and hide the soft keyboard.
- * @param activity the current activity
- */
-fun defocusAndHideKeyboard(activity: Activity?) {
-    if (activity == null) return
-    val view = activity.currentFocus
-    if (view != null) {
-        view.clearFocus()
-        hideKeyboard(activity, view.windowToken)
-    }
-}
-
-
 // private methods
 private fun hideKeyboard(activity: Activity?, windowToken: IBinder?) {
     if (activity == null) return

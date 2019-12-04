@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/rename_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:text="@string/rename_list"
+            style="@style/regular_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/delete_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:text="@string/delete_list"
+            style="@style/regular_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rename_list" />
+
+        <TextView
+            android:id="@+id/additional_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/default_list_cant_be_deleted"
+            android:textColor="@color/textHintColor"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/delete_list"
+            app:layout_constraintStart_toStartOf="@+id/delete_list"
+            app:layout_constraintTop_toBottomOf="@+id/delete_list" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorGray700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/additional_info" />
+
+        <TextView
+            android:id="@+id/delete_completed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:ems="10"
+            android:text="@string/delete_all_completed_tasks"
+            style="@style/regular_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

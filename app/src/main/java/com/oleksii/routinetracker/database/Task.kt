@@ -7,7 +7,9 @@ import java.time.LocalDate
 @TypeConverters(Converters::class)
 data class Task(
     @PrimaryKey(autoGenerate = true)
-    var taskId: Long,
+    var taskId: Long = 1,
+
+    var listId: Long,
 
     @ColumnInfo(name = "task_title")
     var title: String,
@@ -16,7 +18,7 @@ data class Task(
     var details: String,
 
     @ColumnInfo(name = "task_date")
-    var date: LocalDate?,
+    var date: LocalDate = LocalDate.MIN,
 
     @ColumnInfo(name = "task_stage")
     var stage: Int = 0

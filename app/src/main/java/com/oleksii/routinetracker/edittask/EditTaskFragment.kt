@@ -9,9 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.core.text.set
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.ListFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -31,45 +30,50 @@ class EditTaskFragment : Fragment() {
         val binding: FragmentEditTaskBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_edit_task, container, false)
 
+        // Create an instance of the ViewModel.
         val application = requireNotNull(this.activity).application
         val arguments = EditTaskFragmentArgs.fromBundle(requireArguments())
-
-        // Create an instance of the ViewModel Factory.
         val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
-        val viewModelFactory = EditTaskViewModelFactory(dataSource, arguments.taskKey)
-
-        // Get a reference to the ViewModel associated with this fragment.
-        val editTaskViewModel =
-            ViewModelProviders.of(
-                this, viewModelFactory).get(EditTaskViewModel::class.java)
-
-        // To use the View Model with data binding, you have to explicitly
-        // give the binding object a reference to it.
-
+        val editTaskViewModel = EditTaskViewModel(dataSource, arguments.taskKey)
         binding.editTaskViewModel = editTaskViewModel
+
+        var taskIsNotCompleted: Boolean = true
+        var date: LocalDate = LocalDate.MIN
+        var stage = 0
+        var currentListId = com.oleksii.routinetracker.list.ListFragment.currentListId
 
         binding.lifecycleOwner = this
 
-        var date: LocalDate? = null
+        binding.editDate.setOnClickListener {
+            if (taskIsNotCompleted) {
+                val datePickerDialog = DatePickerDialog(it.context, R.style.DatePickerTheme)
+                datePickerDialog.setOnDateSetListener { _, year, month, dayOfMonth ->
+                    date = LocalDate.of(year, month + 1, dayOfMonth)
+                    binding.editDate.setText(formatDate(date))
+                }
+                datePickerDialog.show()
+            }
+        }
 
         editTaskViewModel.task.observe(this, Observer {
             date = it.date
+            if (it.stage == 1) {
+                taskIsNotCompleted = false
+                binding.addDetails.keyListener = null
+                binding.addDetails.isEnabled = false
+                binding.editTask.keyListener = null
+                stage = 1
+            }
         })
 
-        binding.editDate.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(it.context, R.style.DatePickerTheme)
-            datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
-                date = LocalDate.of(year, month + 1, dayOfMonth)
-                binding.editDate.setText(formatDate(date))
-            }
-            datePickerDialog.show()
-        }
 
         binding.arrowBack.setOnClickListener {
             val title = binding.editTask.text.toString()
-            val details = binding.addInfo.text.toString()
+            var details = binding.addDetails.text.toString()
+            if (binding.addDetails.text.isEmpty())
+                details = ""
 
-            editTaskViewModel.updateTask(title, details, date)
+            editTaskViewModel.updateTask(currentListId,title, details, date, stage)
             this.findNavController().navigate(R.id.action_editTaskFragment_to_listFragment)
             hideKeyboard(activity)
         }

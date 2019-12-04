@@ -49,10 +49,13 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
     // Room and Lifecycle dependencies
-    implementation "androidx.room:room-runtime:2.2.1"
+    implementation "androidx.room:room-runtime:2.2.2"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    kapt "androidx.room:room-compiler:2.2.1"
+    kapt "androidx.room:room-compiler:2.2.2"
 
     // RecyclerView
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // DatePicker
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 }

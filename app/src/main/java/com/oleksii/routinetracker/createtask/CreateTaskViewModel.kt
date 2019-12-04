@@ -16,11 +16,12 @@ class CreateTaskViewModel(val database: TaskDao) : ViewModel() {
         viewModelJob.cancel()
     }
 
-    fun createTask(title: String, details: String, date: LocalDate?) {
+    fun createTask(currentListId: Long, title: String, details: String, date: LocalDate) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                val task = Task(0, title, details, date, 0)
-                database.insert(task)
+                val task = Task(0, currentListId, title, details, date)
+                database.insertTask(task)
+
                 onCleared()
             }
         }
