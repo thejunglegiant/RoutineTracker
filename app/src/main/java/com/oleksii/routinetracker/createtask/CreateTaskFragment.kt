@@ -79,9 +79,7 @@ class CreateTaskFragment : BottomSheetDialogFragment() {
             if (binding.addDetails.text.isEmpty())
                 details = ""
             createTaskViewModel.createTask(currentListId, title, details, date)
-            this.dismiss()
-        } else {
-            this.dismiss()
         }
+        this.dismiss()
     }
 }

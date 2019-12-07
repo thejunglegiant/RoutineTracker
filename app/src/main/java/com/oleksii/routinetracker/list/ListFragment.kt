@@ -1,11 +1,9 @@
 package com.oleksii.routinetracker.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -25,12 +23,10 @@ private lateinit var listViewModel: ListViewModel
 
 class ListFragment : Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_list, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false)
         val application = requireNotNull(this.activity).application
         val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
         val adapter = TaskAdapter(
@@ -40,19 +36,19 @@ class ListFragment : Fragment() {
                 )
             },
             DoneButtonListener { task ->
-                listViewModel.onDoneTask(task)
-                showSnackBar(getString(R.string.you_did_it))
+                if (task.stage == 0) {
+                    listViewModel.onDoneTask(task)
+                    showSnackBar(getString(R.string.you_did_it))
+                } else {
+                    listViewModel.onUndoneTask(task)
+                    showSnackBar(getString(R.string.task_were_undoned))
+                }
             }
         )
         binding.tasksList.adapter = adapter
+        binding.listFragment = this
 
         listViewModel = ListViewModel(dataSource, application)
-        binding.listViewModel = listViewModel
-
-        binding.addButton.setOnClickListener {
-            val createTaskFragment = CreateTaskFragment()
-            createTaskFragment.show(fragmentManager!!, createTaskFragment.tag)
-        }
 
         binding.moreActions.setOnClickListener {
             val bottomActionsFragment = BottomActionsFragment()
@@ -71,7 +67,7 @@ class ListFragment : Fragment() {
                 lists.forEach { list ->
                     if (list.opened) {
                         currentListId = list.listId
-                        binding.list = list
+                        binding.listTitle.text = list.title
                         submitAll(listViewModel.tasks.value, adapter)
                     }
                 }
@@ -81,13 +77,20 @@ class ListFragment : Fragment() {
         listViewModel.tasks.observe(this, Observer {
             submitAll(it, adapter)
             if (it.isNullOrEmpty()) {
+                binding.tasksList.visibility = View.GONE
                 binding.freshStart.visibility = View.VISIBLE
             } else {
                 binding.freshStart.visibility = View.GONE
+                binding.tasksList.visibility = View.VISIBLE
             }
         })
 
         return binding.root
+    }
+
+    fun addTask() {
+        val createTaskFragment = CreateTaskFragment()
+        createTaskFragment.show(fragmentManager!!, createTaskFragment.tag)
     }
 
     companion object {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.oleksii.routinetracker.R
 import com.oleksii.routinetracker.database.Task
 import com.oleksii.routinetracker.databinding.ListItemTaskBinding
 import com.oleksii.routinetracker.formatDate
@@ -33,12 +34,7 @@ class TaskAdapter(private val clickListener: TaskListener,
     }
 
     fun submitList(data: List<Task>?) {
-        if (data == null) {
-            tasksList = Collections.emptyList()
-        } else {
-            tasksList = data
-        }
-
+        tasksList = data ?: Collections.emptyList()
         size = tasksList.size
         notifyDataSetChanged()
     }
@@ -58,10 +54,10 @@ class TaskAdapter(private val clickListener: TaskListener,
                 else
                     binding.taskDeadline.visibility = View.VISIBLE
 
-                binding.doneButtonListener = doneButtonListener
                 binding.taskText.paintFlags = binding.taskText.paintFlags and
                         Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 previousDate = item.date
+                binding.taskCheck.setBackgroundResource(R.drawable.ic_radio_button_unchecked_black_24dp)
             } else {
                 if (completedTasksExist)
                     binding.taskDeadline.visibility = View.GONE
@@ -70,9 +66,11 @@ class TaskAdapter(private val clickListener: TaskListener,
 
                 binding.taskText.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 completedTasksExist = true
+                binding.taskCheck.setBackgroundResource(R.drawable.tick_30dp)
             }
             if (item.details.isNotEmpty())
                 binding.taskDetails.visibility = View.VISIBLE
+            binding.doneButtonListener = doneButtonListener
             binding.clickListener = clickListener
             binding.task = item
             binding.executePendingBindings()

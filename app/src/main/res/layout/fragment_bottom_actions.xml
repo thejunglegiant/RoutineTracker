@@ -36,7 +36,7 @@
             app:layout_constraintTop_toBottomOf="@+id/rename_list" />
 
         <TextView
-            android:id="@+id/additional_info"
+            android:id="@+id/delete_list_hint"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/default_list_cant_be_deleted"
@@ -54,23 +54,42 @@
             android:background="@color/colorGray700"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/additional_info" />
+            app:layout_constraintTop_toBottomOf="@+id/delete_list_hint" />
 
         <TextView
             android:id="@+id/delete_completed"
+            style="@style/regular_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:text="@string/delete_all_completed_tasks"
-            style="@style/regular_text"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line" />
+
+        <TextView
+            android:id="@+id/delete_completed_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/no_completed_tasks_yet"
+            android:textColor="@color/textHintColor"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/delete_completed"
+            app:layout_constraintStart_toStartOf="@+id/delete_completed"
+            app:layout_constraintTop_toBottomOf="@+id/delete_completed"/>
+
+        <View
+            android:id="@+id/second_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/delete_completed_hint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

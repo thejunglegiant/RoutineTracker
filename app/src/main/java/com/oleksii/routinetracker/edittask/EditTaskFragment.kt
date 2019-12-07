@@ -2,23 +2,21 @@ package com.oleksii.routinetracker.edittask
 
 
 import android.app.DatePickerDialog
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.ListFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.oleksii.routinetracker.R
 import com.oleksii.routinetracker.database.TaskDatabase
 import com.oleksii.routinetracker.databinding.FragmentEditTaskBinding
 import com.oleksii.routinetracker.formatDate
 import com.oleksii.routinetracker.hideKeyboard
+import com.oleksii.routinetracker.list.ListFragment
 import java.time.LocalDate
 
 class EditTaskFragment : Fragment() {
@@ -37,10 +35,10 @@ class EditTaskFragment : Fragment() {
         val editTaskViewModel = EditTaskViewModel(dataSource, arguments.taskKey)
         binding.editTaskViewModel = editTaskViewModel
 
-        var taskIsNotCompleted: Boolean = true
+        var taskIsNotCompleted = true
         var date: LocalDate = LocalDate.MIN
         var stage = 0
-        var currentListId = com.oleksii.routinetracker.list.ListFragment.currentListId
+        val currentListId = ListFragment.currentListId
 
         binding.lifecycleOwner = this
 
@@ -73,9 +71,13 @@ class EditTaskFragment : Fragment() {
             if (binding.addDetails.text.isEmpty())
                 details = ""
 
-            editTaskViewModel.updateTask(currentListId,title, details, date, stage)
-            this.findNavController().navigate(R.id.action_editTaskFragment_to_listFragment)
-            hideKeyboard(activity)
+            if (title.isNotEmpty()) {
+                editTaskViewModel.updateTask(currentListId, title, details, date, stage)
+                this.findNavController().navigate(R.id.action_editTaskFragment_to_listFragment)
+                hideKeyboard(activity)
+            } else
+                Snackbar.make(binding.newTaskLayout,
+                    application.getString(R.string.enter_list_title), Snackbar.LENGTH_SHORT).show()
         }
 
         binding.deleteTask.setOnClickListener {

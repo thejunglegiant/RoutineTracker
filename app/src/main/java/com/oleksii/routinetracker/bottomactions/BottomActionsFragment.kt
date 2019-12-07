@@ -76,7 +76,15 @@ class BottomActionsFragment : BottomSheetDialogFragment() {
             binding.deleteList.setTextColor(
                 ContextCompat.getColor(application.applicationContext, (R.color.textHintColor))
             )
-            binding.additionalInfo.visibility = View.VISIBLE
+            binding.deleteListHint.visibility = View.VISIBLE
+        }
+
+        if (amountOfCompletedTasks < 1) {
+            binding.deleteCompleted.isEnabled = false
+            binding.deleteCompleted.setTextColor(
+                ContextCompat.getColor(application.applicationContext, (R.color.textHintColor))
+            )
+            binding.deleteCompletedHint.visibility = View.VISIBLE
         }
 
         binding.renameList.setOnClickListener {

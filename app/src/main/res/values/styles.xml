@@ -14,6 +14,7 @@
     </style>
 
     <style name="edit_text">
+        <item name="android:inputType">textCapSentences</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textColorHint">@color/textHintColor</item>
