@@ -19,7 +19,6 @@ class RenameListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        // Get a reference to the binding object and inflate the fragment views.
         val binding: FragmentRenameListBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_rename_list, container, false)
         val application: Application = requireNotNull(this.activity).application

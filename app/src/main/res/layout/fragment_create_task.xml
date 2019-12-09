@@ -12,8 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/view"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/rounded_dialog">
 
         <EditText
             android:id="@+id/edit_title"
@@ -25,7 +24,6 @@
             android:background="@android:color/transparent"
             android:ems="10"
             android:hint="@string/new_task"
-            android:inputType="text"
             style="@style/edit_text"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/details_add"
+            android:id="@+id/add_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -41,7 +39,7 @@
             android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_details"
+            app:layout_constraintTop_toBottomOf="@+id/edit_details"
             app:srcCompat="@drawable/more_details" />
 
         <ImageView
@@ -49,9 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/details_add"
-            app:layout_constraintStart_toEndOf="@+id/details_add"
-            app:layout_constraintTop_toTopOf="@+id/details_add"
+            app:layout_constraintBottom_toBottomOf="@+id/add_details"
+            app:layout_constraintStart_toEndOf="@+id/add_details"
+            app:layout_constraintTop_toTopOf="@+id/add_details"
             app:srcCompat="@drawable/date_ico" />
 
         <Button
@@ -63,26 +61,26 @@
             android:text="@string/save_button"
             android:textAllCaps="false"
             style="@style/button_text"
-            app:layout_constraintBottom_toBottomOf="@+id/details_add"
+            app:layout_constraintBottom_toBottomOf="@+id/add_details"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/details_add" />
+            app:layout_constraintTop_toTopOf="@+id/add_details" />
 
         <EditText
-            android:id="@+id/add_details"
+            android:id="@+id/edit_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
-            android:inputType="textMultiLine"
+            android:inputType="textCapSentences"
             android:ems="10"
             android:hint="@string/add_details"
             android:textSize="17sp"
             android:textColor="@color/textHintColor"
+            android:textColorHint="@color/textHintColor"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_title"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_title" />
 
         <TextView
             android:id="@+id/date_show"

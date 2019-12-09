@@ -19,4 +19,7 @@
     <string name="default_list_cant_be_deleted">Default list can\'t be deleted</string>
     <string name="a_fresh_start">A fresh start</string>
     <string name="anything_to_add">Anything to add?</string>
+    <string name="completed">Completed</string>
+    <string name="task_were_undoned">Task were been undone</string>
+    <string name="no_completed_tasks_yet">No completed tasks yet</string>
 </resources>

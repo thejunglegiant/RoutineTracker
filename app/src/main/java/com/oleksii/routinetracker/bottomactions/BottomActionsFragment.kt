@@ -21,11 +21,8 @@ class BottomActionsFragment : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        // Get a reference to the binding object and inflate the fragment views.
         val binding: FragmentBottomActionsBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_bottom_actions, container, false)
-
-        // Create an instance of the ViewModel.
         val application = requireNotNull(this.activity).application
         val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
         val bottomActionsViewModel = BottomActionsViewModel(dataSource)
@@ -76,7 +73,15 @@ class BottomActionsFragment : BottomSheetDialogFragment() {
             binding.deleteList.setTextColor(
                 ContextCompat.getColor(application.applicationContext, (R.color.textHintColor))
             )
-            binding.additionalInfo.visibility = View.VISIBLE
+            binding.deleteListHint.visibility = View.VISIBLE
+        }
+
+        if (amountOfCompletedTasks < 1) {
+            binding.deleteCompleted.isEnabled = false
+            binding.deleteCompleted.setTextColor(
+                ContextCompat.getColor(application.applicationContext, (R.color.textHintColor))
+            )
+            binding.deleteCompletedHint.visibility = View.VISIBLE
         }
 
         binding.renameList.setOnClickListener {
