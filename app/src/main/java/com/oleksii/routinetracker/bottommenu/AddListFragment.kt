@@ -22,7 +22,6 @@ class AddListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        // Get a reference to the binding object and inflate the fragment views.
         val binding: FragmentAddListBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_add_list, container, false)
         val application: Application = requireNotNull(this.activity).application

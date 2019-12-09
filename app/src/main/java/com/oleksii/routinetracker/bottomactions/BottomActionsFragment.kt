@@ -21,11 +21,8 @@ class BottomActionsFragment : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        // Get a reference to the binding object and inflate the fragment views.
         val binding: FragmentBottomActionsBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_bottom_actions, container, false)
-
-        // Create an instance of the ViewModel.
         val application = requireNotNull(this.activity).application
         val dataSource = TaskDatabase.getInstance(application).taskDatabaseDao
         val bottomActionsViewModel = BottomActionsViewModel(dataSource)

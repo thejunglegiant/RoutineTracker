@@ -24,10 +24,9 @@ fun TextView.setTaskDetails(item: Task?) {
 @BindingAdapter("taskDate")
 fun TextView.setTaskDateAsString(item: Task?) {
     item?.let {
-        if (it.stage == 0) {
-            text = formatDate(it.date)
-        } else {
-            text = context.getString(R.string.completed)
+        text = when (it.stage) {
+            0 -> formatDate(it.date)
+            else -> context.getString(R.string.completed)
         }
     }
 }

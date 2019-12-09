@@ -1,7 +1,6 @@
 package com.oleksii.routinetracker.list
 
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +56,7 @@ class TaskAdapter(private val clickListener: TaskListener,
                 binding.taskText.paintFlags = binding.taskText.paintFlags and
                         Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 previousDate = item.date
-                binding.taskCheck.setBackgroundResource(R.drawable.ic_radio_button_unchecked_black_24dp)
+                binding.taskCheck.setBackgroundResource(R.drawable.ic_radio_button_unchecked_24dp)
             } else {
                 if (completedTasksExist)
                     binding.taskDeadline.visibility = View.GONE
