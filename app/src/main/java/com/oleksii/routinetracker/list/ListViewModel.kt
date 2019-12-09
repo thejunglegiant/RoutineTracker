@@ -27,6 +27,15 @@ class ListViewModel(
         }
     }
 
+    fun onUndoneTask(task: Task) {
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                task.stage = 0
+                database.updateTask(task)
+            }
+        }
+    }
+
     fun insertList() {
         uiScope.launch {
             withContext(Dispatchers.IO) {

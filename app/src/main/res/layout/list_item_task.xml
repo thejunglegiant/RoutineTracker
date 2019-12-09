@@ -22,8 +22,8 @@
         android:background="@color/colorPrimaryDark">
 
         <TextView
+            style="@style/button_text"
             android:id="@+id/task_deadline"
-            style="@style/regular_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -36,16 +36,17 @@
             app:taskDate="@{task}"
             tools:text="Tomorrow" />
 
-        <Button
+        <ImageButton
             android:id="@+id/task_check"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:background="@android:color/transparent"
             android:onClick="@{() -> doneButtonListener.onClick(task)}"
-            android:background="@drawable/custom_button"
             app:layout_constraintBottom_toBottomOf="@+id/task_details"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/task_text" />
+            app:layout_constraintTop_toTopOf="@+id/task_text"
+            tools:srcCompat="@drawable/ic_radio_button_unchecked_24dp" />
 
         <TextView
             android:id="@+id/task_text"

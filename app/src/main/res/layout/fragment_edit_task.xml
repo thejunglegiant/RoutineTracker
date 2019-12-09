@@ -12,7 +12,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimaryDark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/new_task_layout"
@@ -27,7 +27,7 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/delete_bin" />
+                app:srcCompat="@drawable/delete_bin_24dp" />
 
             <ImageView
                 android:id="@+id/arrow_back"
@@ -37,10 +37,10 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/arrow_back_black" />
+                app:srcCompat="@drawable/arrow_back_24dp" />
 
             <EditText
-                android:id="@+id/edit_task"
+                android:id="@+id/edit_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -48,7 +48,6 @@
                 android:layout_marginEnd="8dp"
                 android:background="@android:color/transparent"
                 android:hint="@string/enter_your_task"
-                android:inputType="textPersonName"
                 style="@style/edit_text"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +62,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_task"
+                app:layout_constraintTop_toBottomOf="@+id/edit_title"
                 app:srcCompat="@drawable/more_details" />
 
             <EditText
@@ -81,7 +80,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageView3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/edit_task"
+                app:layout_constraintTop_toBottomOf="@+id/edit_title"
                 app:taskDetails="@{editTaskViewModel.task}" />
 
             <ImageView

@@ -5,11 +5,8 @@
 
     <data>
         <variable
-            name="list"
-            type="com.oleksii.routinetracker.database.SetOfTask" />
-        <variable
-            name="listViewModel"
-            type="com.oleksii.routinetracker.list.ListViewModel" />
+            name="listFragment"
+            type="com.oleksii.routinetracker.list.ListFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,33 +24,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/list_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:layout_marginEnd="64dp"
-                android:paddingTop="@dimen/small_padding"
-                android:textColor="@color/textColor"
-                android:textSize="36sp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:listTitle="@{list}"
-                tools:text="My Tasks" />
-
             <LinearLayout
                 android:id="@+id/fresh_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="@+id/tasks_list"
+                android:orientation="vertical"
+                android:onClick="@{() -> listFragment.addTask()}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tasks_list"
-                app:layout_constraintTop_toBottomOf="@+id/list_title">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/list_title">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -69,6 +50,22 @@
                     android:text="@string/anything_to_add"
                     android:textSize="18sp" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/list_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+                android:paddingTop="@dimen/small_padding"
+                android:textColor="@color/textColor"
+                android:textSize="48sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="My Tasks" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tasks_list"
@@ -98,6 +95,7 @@
             android:text="@string/add"
             android:textColor="@color/textColor"
             android:textSize="19sp"
+            android:onClick="@{() -> listFragment.addTask()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/more_actions"
             app:layout_constraintStart_toEndOf="@+id/menu_button"

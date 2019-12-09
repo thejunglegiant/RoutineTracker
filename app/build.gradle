@@ -55,7 +55,4 @@ dependencies {
 
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-
-    // DatePicker
-    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 }
