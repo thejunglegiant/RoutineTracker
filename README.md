@@ -1,5 +1,5 @@
 # RoutineTracker
-A light app which will help you with tracking all your tasks and maybe the whole routine in the future! I made this project just for fun, a bit practise and as a university project for the first semester.
+A light app which will help you with tracking all your tasks and maybe the whole routine in the future! It was made specifically as a first-semester university project.
 # Technologies
 * Kotlin, as a main language;
 * Android Architecture Components
