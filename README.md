@@ -7,6 +7,6 @@ A light app which will help you with tracking all your tasks and maybe the whole
 # Deploying
 * Clone the repo
 * Run your Android emulator (minSdkVersion: 26)
-* Install the app, simply `./gradlew installDebug` should work
+* Install the app - enjoy!
 
 <img src="screenshot.png">
